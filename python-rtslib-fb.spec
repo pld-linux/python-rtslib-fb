@@ -42,11 +42,11 @@ generic SCSI target, present in 3.x Linux kernel versions.
 
 %build
 %if %{with python2}
-%{__python} setup.py build --build-base build-2 %{?with_tests:test}
+%py_build %{?with_tests:test}
 %endif
 
 %if %{with python3}
-%{__python3} setup.py build --build-base build-3 %{?with_tests:test}
+%py3_build %{?with_tests:test}
 %endif
 
 %install
@@ -54,21 +54,13 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_mandir}/man{5,8}
 
 %if %{with python2}
-%{__python} setup.py \
-	build --build-base build-2 \
-	install --skip-build \
-	--root=$RPM_BUILD_ROOT \
-	--optimize=2
+%py_install
 
 %py_postclean
 %endif
 
 %if %{with python3}
-%{__python3} setup.py \
-	build --build-base build-3 \
-	install --skip-build \
-	--root=$RPM_BUILD_ROOT \
-	--optimize=2
+%py3_install
 %endif
 
 cp doc/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
