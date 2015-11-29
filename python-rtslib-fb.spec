@@ -15,7 +15,7 @@ Source0:	https://codeload.github.com/agrover/rtslib-fb/tar.gz/v%{version}
 URL:		https://github.com/agrover/rtslib-fb
 BuildRequires:	python-distribute
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.710
 BuildRequires:	sed >= 4.0
 %if %{with python3}
 BuildRequires:	python3-distribute
