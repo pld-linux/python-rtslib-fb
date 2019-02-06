@@ -10,9 +10,9 @@ Version:	2.1.fb63
 Release:	1
 License:	Apache v2.0
 Group:		Libraries/Python
-Source0:	https://codeload.github.com/agrover/rtslib-fb/tar.gz/v%{version}
+Source0:	https://codeload.github.com/open-iscsi/rtslib-fb/tar.gz/v%{version}
 # Source0-md5:	7fb48bee32a4ed961a4cd885184a9bb3
-URL:		https://github.com/agrover/rtslib-fb
+URL:		https://github.com/open-iscsi/rtslib-fb
 BuildRequires:	python-distribute
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.710
