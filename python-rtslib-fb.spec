@@ -1,4 +1,7 @@
 #
+# TODO:
+# - when updating, check if we can get rid of -no-save-flag patch in targetcli
+#
 # Conditional build:
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
