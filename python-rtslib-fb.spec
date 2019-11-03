@@ -9,12 +9,12 @@
 %define module	rtslib_fb
 Summary:	Python library for configuring the Linux kernel-based multiprotocol SCSI target (LIO)
 Name:		python-rtslib-fb
-Version:	2.1.fb63
-Release:	2
+Version:	2.1.70
+Release:	1
 License:	Apache v2.0
 Group:		Libraries/Python
-Source0:	https://codeload.github.com/open-iscsi/rtslib-fb/tar.gz/v%{version}
-# Source0-md5:	7fb48bee32a4ed961a4cd885184a9bb3
+Source0:	https://github.com/open-iscsi/rtslib-fb/archive/v%{version}/%{module}-%{version}.tar.gz
+# Source0-md5:	9ebdd1dc80537ffd5a92178621e8cc47
 URL:		https://github.com/open-iscsi/rtslib-fb
 BuildRequires:	python-distribute
 BuildRequires:	rpm-pythonprov
@@ -55,53 +55,56 @@ generic SCSI target, present in 3.x Linux kernel versions.
 %endif
 
 %install
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_mandir}/man{5,8}
 
 %if %{with python2}
 %py_install
 
 # symlink for old module name
-rm -rf $RPM_BUILD_ROOT%{py_sitescriptdir}/rtslib
+%{__rm} -r $RPM_BUILD_ROOT%{py_sitescriptdir}/rtslib
 ln -sf %{py_sitescriptdir}/%{module} $RPM_BUILD_ROOT%{py_sitescriptdir}/rtslib
 
 %py_postclean
+
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/targetctl{,2}
+cp doc/targetctl.8 $RPM_BUILD_ROOT%{_mandir}/man8/targetctl2.8
 %endif
 
 %if %{with python3}
 %py3_install
 
 # symlink for old module name
-rm -rf $RPM_BUILD_ROOT%{py3_sitescriptdir}/rtslib
+%{__rm} -r $RPM_BUILD_ROOT%{py3_sitescriptdir}/rtslib
 ln -sf %{py3_sitescriptdir}/%{module} $RPM_BUILD_ROOT%{py3_sitescriptdir}/rtslib
+cp doc/targetctl.8 $RPM_BUILD_ROOT%{_mandir}/man8/
 %endif
 
-cp doc/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
-cp doc/*.8 $RPM_BUILD_ROOT%{_mandir}/man8/
+cp -p doc/*.5 $RPM_BUILD_ROOT%{_mandir}/man5/
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/targetctl
 %doc README.md
+%attr(755,root,root) %{_bindir}/targetctl2
 %dir %{py_sitescriptdir}/%{module}
 %ghost %{py_sitescriptdir}/rtslib
 %{py_sitescriptdir}/%{module}/*.py[co]
-%if "%{py_ver}" > "2.4"
 %{py_sitescriptdir}/rtslib_fb-*.egg-info
+%{_mandir}/man8/targetctl2.8*
 %endif
-%endif
-%{_mandir}/man5/saveconfig.json.5*
-%{_mandir}/man8/targetctl.8*
 
 %if %{with python3}
 %files -n python3-rtslib-fb
 %defattr(644,root,root,755)
 %doc README.md
+%attr(755,root,root) %{_bindir}/targetctl
 %{py3_sitescriptdir}/%{module}
 %{py3_sitescriptdir}/rtslib
 %{py3_sitescriptdir}/rtslib_fb-*-py*.egg-info
+%{_mandir}/man5/saveconfig.json.5*
+%{_mandir}/man8/targetctl.8*
 %endif
