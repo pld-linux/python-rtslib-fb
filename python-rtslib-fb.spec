@@ -10,7 +10,7 @@
 Summary:	Python library for configuring the Linux kernel-based multiprotocol SCSI target (LIO)
 Name:		python-rtslib-fb
 Version:	2.1.70
-Release:	6
+Release:	7
 License:	Apache v2.0
 Group:		Libraries/Python
 Source0:	https://github.com/open-iscsi/rtslib-fb/archive/v%{version}/%{module}-%{version}.tar.gz
